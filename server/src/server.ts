@@ -5,11 +5,15 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import typeDefs from "../graphql/typeDefs/index.js";
 import resolvers from "../graphql/resolvers/index.js";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import dotenv from "dotenv";
 
 
 
 async function main(prisma: PrismaClient) {
-    await questionsSeeder(prisma);
+    if (process.env.NODE_ENV === "production") {
+        console.log("Seeding the database...");
+        await questionsSeeder(prisma);
+    }
     const schema = makeExecutableSchema({
         typeDefs,
         resolvers,
@@ -25,6 +29,7 @@ async function main(prisma: PrismaClient) {
 }
 
 const prisma = new PrismaClient();
+dotenv.config();
 main(prisma)
 
 

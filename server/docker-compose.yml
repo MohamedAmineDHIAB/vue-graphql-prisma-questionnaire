@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  my-postgres:
+    image: postgres:latest
+    container_name: my-postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=foxbase
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
