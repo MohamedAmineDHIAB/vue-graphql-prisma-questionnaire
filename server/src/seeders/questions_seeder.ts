@@ -6,7 +6,7 @@ const questions_seeder = async (prisma: any) => {
     for (let i = 0; i < questions.length; i++) {
         const question = await prisma.questions.create({
             data: {
-                question: questions[i].question,
+                title: questions[i].title,
                 type: questions[i].type,
                 options: questions[i].options,
                 children: questions[i].children,

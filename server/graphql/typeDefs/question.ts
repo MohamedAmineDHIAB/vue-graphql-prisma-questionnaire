@@ -2,16 +2,16 @@
 const typeDefs = `#graphql
     scalar Date
     type Question {
-        id: ID!
-        question: String!
+        id: Int
+        title: String!
         type: String!
         options: [String!]!
-        children: [String!]!
+        children: [String!]
         previous_answers: [String!]!
         createdAt: Date!
     }
     type Query {
-        searchQuestions(keyword: String!): [Question!]!
+        searchQuestion(id: Int): [Question!]!
     }
         
 

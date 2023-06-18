@@ -9,7 +9,7 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 
 
 async function main(prisma: PrismaClient) {
-    await questionsSeeder(prisma);
+    // await questionsSeeder(prisma);
     const schema = makeExecutableSchema({
         typeDefs,
         resolvers,

@@ -12,10 +12,17 @@ datasource db {
 
 model questions {
   id               Int      @id @default(autoincrement()) @map("_id")
-  question         String
+  title            String
   type             String
   options          String[]
   children         String[]
   previous_answers String[] @default([])
   createdAt        DateTime @default(now())
+}
+
+model answers {
+  id         Int      @id @default(autoincrement()) @map("_id")
+  questionId Int
+  answer     String[]
+  createdAt  DateTime @default(now())
 }

@@ -6,15 +6,17 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-esm ./src/server.ts",
+    "dev": "nodemon --exec ts-node-esm ./src/server.ts",
     "compile": "tsc",
-    "start": "npm run compile && node ./dist/index.js"
+    "start": "NODE_ENV=production npm run compile && node ./dist/index.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/http-errors": "^2.0.1",
     "@types/lodash.merge": "^4.6.7",
     "@types/node": "^20.3.1",
+    "nodemon": "^2.0.22",
     "prisma": "^4.15.0",
     "typescript": "^5.1.3"
   },

@@ -1,10 +1,11 @@
-import questionsResolvers from './question.js';
+import questionResolvers from './question.js';
 import scalarsResolvers from './scalars.js';
+import answerResolvers from './answer.js';
 import merge from "lodash.merge";
 
 const resolvers = merge(
     {},
-    scalarsResolvers, questionsResolvers
+    scalarsResolvers, questionResolvers, answerResolvers
 );
 
 export default resolvers;
