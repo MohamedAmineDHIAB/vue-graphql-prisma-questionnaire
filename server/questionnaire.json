@@ -1,0 +1,106 @@
+{
+    "question": "Anwendungsbereich",
+    "type": "radio",
+    "options": [
+        "Aussen",
+        "Innen"
+    ],
+    "children": [
+        {
+            "question": "Untergrund",
+            "type": "multiple choice",
+            "options": [
+                "Holz",
+                "Fassade",
+                "Tapete",
+                "Putz"
+            ],
+            "previous_answer": [
+                "Aussen",
+                "Innen"
+            ],
+            "children": [
+                {
+                    "question": "Kennen Sie sich mit Deckkraft aus?",
+                    "type": "radio",
+                    "options": [
+                        "Ja",
+                        "Nein"
+                    ],
+                    "previous_answer": [
+                        "Holz",
+                        "Fassade",
+                        "Tapete",
+                        "Putz"
+                    ],
+                    "children": [
+                        {
+                            "question": "Wie stark?",
+                            "type": "radio",
+                            "options": [
+                                "<95",
+                                "95",
+                                "98",
+                                ">99.5"
+                            ],
+                            "previous_answer": [
+                                "Ja"
+                            ],
+                            "children": [
+                                {
+                                    "question": "Farbton",
+                                    "type": "radio",
+                                    "options": [
+                                        "rot",
+                                        "blau",
+                                        "grün",
+                                        "gelb",
+                                        "schwarz",
+                                        "weiss"
+                                    ],
+                                    "previous_answer": [
+                                        "<95",
+                                        "95",
+                                        "98",
+                                        ">99.5"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "question": "Welcher Untergrund?",
+                            "type": "radio",
+                            "options": [
+                                "heller",
+                                "dunkler"
+                            ],
+                            "previous_answer": [
+                                "Nein"
+                            ],
+                            "children": [
+                                {
+                                    "question": "Farbton",
+                                    "type": "radio",
+                                    "options": [
+                                        "rot",
+                                        "blau",
+                                        "grün",
+                                        "gelb",
+                                        "schwarz",
+                                        "weiss"
+                                    ],
+                                    "previous_answer": [
+                                        "<95",
+                                        "95",
+                                        "98",
+                                        ">99.5"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
