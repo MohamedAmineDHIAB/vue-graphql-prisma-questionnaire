@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec ts-node-esm ./src/server.ts",
+    "dev": "nodemon --exec NODE_ENV=development ts-node-esm ./src/server.ts",
     "compile": "tsc",
     "start": "NODE_ENV=production npm run compile && node ./dist/index.js"
   },
@@ -24,6 +24,7 @@
     "@apollo/server": "^4.7.4",
     "@graphql-tools/schema": "^10.0.0",
     "@prisma/client": "^4.15.0",
+    "dotenv": "^16.3.1",
     "graphql": "^16.6.0",
     "graphql-scalars": "^1.22.2",
     "lodash.merge": "^4.6.2"
