@@ -8,12 +8,7 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import dotenv from "dotenv";
 
 
-
-async function main(prisma: PrismaClient) {
-    if (process.env.NODE_ENV === "production") {
-        console.log("Seeding the database...");
-        await questionsSeeder(prisma);
-    }
+export async function createApolloServer(port: number) {
     const schema = makeExecutableSchema({
         typeDefs,
         resolvers,
@@ -22,8 +17,20 @@ async function main(prisma: PrismaClient) {
         schema
     });
     const { url } = await startStandaloneServer(server, {
-        listen: { port: 4000 },
+        listen: { port: port },
     });
+    return { server, url };
+}
+
+
+async function main(prisma: PrismaClient) {
+    if (process.env.NODE_ENV === "production") {
+        console.log("Seeding the database...");
+        await questionsSeeder(prisma);
+    }
+    const PORT = Number(process.env.PORT) || 4000;
+
+    const { server, url } = await createApolloServer(PORT);
     console.log(`🚀  Server ready at: ${url}`);
 
 }
