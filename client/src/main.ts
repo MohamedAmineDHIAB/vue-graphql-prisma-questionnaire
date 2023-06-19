@@ -1,12 +1,13 @@
 import { createApp, provide, h } from 'vue'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import ApolloClient from 'apollo-boost';
+import './style.css'
 import App from './App.vue'
 
-
+const BACKEND_URI = import.meta.env.VITE_BACKEND_URI;
 
 const apolloClient = new ApolloClient({
-    uri: import.meta.env.VITE_BACKEND_URI,
+    uri: BACKEND_URI,
 })
 
 const app = createApp({
