@@ -12,7 +12,15 @@
         "moduleResolution": "node",
         "esModuleInterop": true,
         "types": [
-            "node"
-        ]
-    }
+            "node",
+            "jest"
+        ],
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "allowImportingTsExtensions": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "__tests__/**/*.ts"
+    ],
 }

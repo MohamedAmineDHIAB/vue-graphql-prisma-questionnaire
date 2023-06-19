@@ -1,5 +1,5 @@
 // This file contains a function that will seed the database with our list of questions
-import questions from "../data/questions_data.js"
+import questions from "../data/questions_data.ts"
 
 
 const questions_seeder = async (prisma: any) => {

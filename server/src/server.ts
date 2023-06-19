@@ -1,26 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import questionsSeeder from "./seeders/questions_seeder.js";
-import { ApolloServer } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
-import typeDefs from "../graphql/typeDefs/index.js";
-import resolvers from "../graphql/resolvers/index.js";
-import { makeExecutableSchema } from "@graphql-tools/schema";
+import questionsSeeder from "./seeders/questions_seeder.ts";
+import createApolloServer  from "./create_server.ts";
 import dotenv from "dotenv";
+dotenv.config();
 
 
-export async function createApolloServer(port: number) {
-    const schema = makeExecutableSchema({
-        typeDefs,
-        resolvers,
-    });
-    const server = new ApolloServer({
-        schema
-    });
-    const { url } = await startStandaloneServer(server, {
-        listen: { port: port },
-    });
-    return { server, url };
-}
 
 
 async function main(prisma: PrismaClient) {
@@ -36,7 +20,6 @@ async function main(prisma: PrismaClient) {
 }
 
 const prisma = new PrismaClient();
-dotenv.config();
 main(prisma)
 
 

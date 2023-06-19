@@ -1,5 +1,5 @@
-import questionTypeDefs from './question.js';
-import answerTypeDefs from './answer.js';
+import questionTypeDefs from './question.ts';
+import answerTypeDefs from './answer.ts';
 
 
 const typeDefs = [questionTypeDefs, answerTypeDefs];

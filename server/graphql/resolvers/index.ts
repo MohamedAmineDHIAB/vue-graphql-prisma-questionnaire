@@ -1,6 +1,6 @@
-import questionResolvers from './question.js';
-import scalarsResolvers from './scalars.js';
-import answerResolvers from './answer.js';
+import questionResolvers from './question.ts';
+import scalarsResolvers from './scalars.ts';
+import answerResolvers from './answer.ts';
 import merge from "lodash.merge";
 
 const resolvers = merge(
