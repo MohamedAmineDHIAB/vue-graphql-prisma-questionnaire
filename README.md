@@ -1,10 +1,68 @@
 # Questionnaire based on Vue.js - Prisma - GraphQL Apollo
 
-## How to run the backend :
+## For development:
 
+### Requirements: :whale:
+* ```sh
+   node >= v19.6.1
+   ```
+* ```sh
+   npm >= 9.7.1
+   ```
+* ```sh
+   docker >= 24.0.2
+   ```
+* ```sh
+   docker compose  >= v2.18.1
+   ```
+
+### How to run the postgresql database :
 1. Clone the repository
-2. Add a .env file in the root directory with the following variables:
-   - `DATABASE_URL ` 
-3. run `npm install`
-4. run `npx prisma generate`
-5. run `npm run dev`
+2. Run the docker compose command:
+   ```sh
+   cd ./server && docker-compose up -d
+   ```
+3. Check if the database is running on port `5432`:
+   ```sh
+   nc -zv localhost 5432
+   ```
+
+### How to run the backend service :
+
+1. Add a .env file in the server directory with the following variables (check `.env.example`):
+   * `DATABASE_URL ` 
+2. Install the dependencies:
+   ```sh
+   npm install
+   ```
+3. Generate the Prisma client:
+   ```sh
+   npx prisma generate
+   ```
+4. Run migrations with Prisma:
+   ```sh
+   npx prisma migrate dev
+   ```
+5. Run the development server:
+   ```sh
+   npm run dev
+   ```
+
+### How to run the frontend :
+1. Go to the client directory:
+   ```sh
+   cd ./client
+   ```
+2. Install the dependencies:
+   ```sh
+   npm install
+   ```
+3. Run the development server:
+   ```sh
+   npm run dev
+   ```
+
+
+## For production:
+
+*Cooming soon...*
