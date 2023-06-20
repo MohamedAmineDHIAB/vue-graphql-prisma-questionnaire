@@ -1,4 +1,3 @@
-import { GraphQLError } from 'graphql';
 import { PrismaClient } from '@prisma/client';
 
 const searchAnswerPrisma = async (depth: number, prisma: PrismaClient) => {

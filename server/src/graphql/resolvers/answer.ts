@@ -18,9 +18,9 @@ const resolvers = {
     Mutation: {
         createAnswer: async (
             _: any,
-            { questionId, answer }: { questionId: number, answer: string[] },
+            { questionId, answer, depth }: { questionId: number, answer: string[], depth: number },
         ) => {
-            const newAnswer = await createAnswerPrisma(answer, questionId, prisma);
+            const newAnswer = await createAnswerPrisma(answer, questionId, depth, prisma);
             return newAnswer;
         }
     }
