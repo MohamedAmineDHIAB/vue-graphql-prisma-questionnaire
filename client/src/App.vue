@@ -5,13 +5,13 @@
 </template>
 
 <script lang="ts">
-import Question from './components/Question.vue';
+import Questionnaire from './views/Questionnaire.vue';
 import Home from './views/Home.vue';
 
 export default {
   name: 'App',
   components: {
-    Question,
+    Questionnaire,
     Home,
   },
 };

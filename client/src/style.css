@@ -14,6 +14,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+div {
+  margin: 1rem;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -57,11 +61,13 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.25s;
+  border-color: #1a1a1a;
 }
 
 button:hover {
   border-color: #646cff;
+  color: #646cff;
 }
 
 button:focus,
