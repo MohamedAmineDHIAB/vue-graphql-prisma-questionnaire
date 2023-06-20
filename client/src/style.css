@@ -63,6 +63,7 @@ button {
   cursor: pointer;
   transition: all 0.25s;
   border-color: #1a1a1a;
+  margin: 1rem;
 }
 
 button:hover {

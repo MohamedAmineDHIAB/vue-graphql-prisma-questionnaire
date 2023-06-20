@@ -6,7 +6,8 @@
             <h2>{{ question.title }}?</h2>
             <div>
                 <div v-for="(option, index) in question.options" :key="index">
-                    <input :type="question.type" :value="option" :id="option" :name="question.title" />
+                    <input :type="question.type" :value="option" :id="option" :name="question.title"
+                        :checked="defaultAnswer.includes(option)" @change="handleOptionSelected(option)" />
                     <label :for="option">{{ option }}</label>
                 </div>
             </div>
@@ -38,6 +39,16 @@ export default {
                 type: '',
                 options: [],
             }),
+        },
+        defaultAnswer: {
+            type: Array,
+            default: () => ([]),
+        },
+    },
+    methods: {
+        handleOptionSelected(option: string) {
+            const selectedOption = [option]; // Convert the selected option into an array if needed
+            this.$emit('optionSelected', selectedOption);
         },
     },
 };

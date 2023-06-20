@@ -11,7 +11,7 @@ const createAnswerPrisma = async (answer: string[], questionId: number, depth: n
     });
     // if no question is found, throw an error
     if (question.length === 0) {
-        const ErrorMsg = "The Question you are trying to answer to does not exist...";
+        const ErrorMsg = "The Question you are trying to answer does not exist...";
         throw new GraphQLError(ErrorMsg, {
             extensions: { code: 404 },
         });
