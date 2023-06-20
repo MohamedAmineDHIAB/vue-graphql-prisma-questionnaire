@@ -2,13 +2,13 @@
 const typeDefs = `#graphql
     scalar Date
     type Answer {
-        id: Int
+        depth: Int
         questionId: String!
         answer: [String!]
         createdAt: Date!
     }
     type Query {
-        searchAnswer(id: Int): [Answer!]!
+        searchAnswer(depth: Int): [Answer!]!
     }
     type Mutation {
         createAnswer(questionId: Int, answer: [String!]): Answer!

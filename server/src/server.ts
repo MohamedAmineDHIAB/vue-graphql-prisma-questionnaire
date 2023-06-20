@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import questionsSeeder from "./seeders/questions_seeder.ts";
-import createApolloServer  from "./create_server.ts";
+import createApolloServer from "./utils/create_server.ts";
 import dotenv from "dotenv";
 dotenv.config();
 

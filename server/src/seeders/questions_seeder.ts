@@ -10,7 +10,8 @@ const questions_seeder = async (prisma: any) => {
                 type: questions[i].type,
                 options: questions[i].options,
                 children: questions[i].children,
-                previous_answers: questions[i].previous_answer
+                previous_answer: questions[i].previous_answer,
+                depth: questions[i].depth,
             },
         });
     }

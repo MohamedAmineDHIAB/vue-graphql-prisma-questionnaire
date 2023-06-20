@@ -11,18 +11,28 @@ datasource db {
 }
 
 model questions {
-  id               Int      @id @default(autoincrement()) @map("_id")
-  title            String
-  type             String
-  options          String[]
-  children         String[]
-  previous_answers String[] @default([])
-  createdAt        DateTime @default(now())
+  id              Int      @id @default(autoincrement())
+  title           String
+  type            String
+  options         String[]
+  children        String[]
+  previous_answer String[]
+  depth           Int      @default(0)
+  createdAt       DateTime @default(now())
 }
 
 model answers {
-  id         Int      @id @default(autoincrement()) @map("_id")
+  depth      Int      @id @default(autoincrement())
   questionId Int
   answer     String[]
   createdAt  DateTime @default(now())
+}
+
+model products {
+  id             Int      @id @default(autoincrement())
+  name           String
+  description    String
+  price          Int
+  answers_vector Float[]
+  createdAt      DateTime @default(now())
 }

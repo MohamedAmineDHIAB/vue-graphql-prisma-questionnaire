@@ -5,13 +5,14 @@ const typeDefs = `#graphql
         id: Int
         title: String!
         type: String!
-        options: [String!]!
+        options: [String!]
         children: [String!]
-        previous_answers: [String!]!
+        previous_answer: [String!]
+        depth : Int!
         createdAt: Date!
     }
     type Query {
-        searchQuestion(id: Int): [Question!]!
+        searchQuestion(depth: Int): [Question!]!
     }
         
 

@@ -1,25 +1,25 @@
 // test that the server is running on port 8000 and returns a 200 status code
-import createApolloServer from '../../src/create_server';
+import createApolloServer from '../../src/utils/create_server';
 // we'll use apollo client to test our server
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client/core';
 // import prisma client to check the results sent by the server
 import { PrismaClient } from '@prisma/client';
 
-// the question id we'll use for our test 
-const ID = 1;
+// the question depth we'll use for our test (first question)
+const DEPTH = 1;
 
 // this is the query for our test
 const queryData = {
-    query: gql`query searchQuestion($id: Int) {
-    searchQuestion(id: $id){
-        id
+    query: gql`query searchQuestion($depth: Int) {
+    searchQuestion(depth: $depth){
+        depth
         title
     }
   }`,
-    variables: { id: ID },
+    variables: { depth: DEPTH },
 };
 
-describe('e2e demo', () => {
+describe('End-to-End Testing for Question Search', () => {
     let server: any;
     let url: any;
     let client: any;
@@ -44,10 +44,10 @@ describe('e2e demo', () => {
         await prisma.$disconnect();
     });
 
-    it('query question', async () => {
+    it('should return a question with valid details', async () => {
         // get the real data from the prisma client
-        const realData = await prisma.questions.findUnique({
-            where: { id: ID },
+        const realData = await prisma.questions.findMany({
+            where: { depth: DEPTH },
         });
         // send our request to the url of the test server
         const response = await client.query(queryData);
@@ -57,7 +57,31 @@ describe('e2e demo', () => {
         const searchQuestion = data.searchQuestion[0];
         // Assert the expected result
         expect(searchQuestion).toBeDefined();
-        expect(searchQuestion.id).toBe(ID);
-        expect(searchQuestion.title).toBe(realData.title);
+        expect(searchQuestion.depth).toBe(DEPTH);
+        expect(searchQuestion.title).toBe(realData[0].title);
     });
+    it('should return an ApolloError if the question is not found', async () => {
+        try {
+            // send our request to the url of the test server
+            await client.query({
+                query: gql`query searchQuestion($depth: Int) {
+                    searchQuestion(depth: $depth){
+                        depth
+                        title
+                    }
+                }`,
+                variables: { depth: 0 },
+            });
+        } catch (error) {
+            // get error message
+            const errorMessage = error.graphQLErrors[0].message;
+            // Assert the expected message
+            expect(errorMessage).toBe('No Question was found...');
+            // get error code
+            const errorCode = error.graphQLErrors[0].extensions.code;
+            // Assert the expected code
+            expect(errorCode).toBe(404);
+        }
+    }
+    );
 });

@@ -2,7 +2,7 @@
 
 ## For development:
 
-### Requirements: :whale:
+#### Requirements: :whale:
 * ```sh
    node >= v19.6.1
    ```
@@ -16,7 +16,7 @@
    docker compose  >= v2.18.1
    ```
 
-### How to run the postgresql database :
+#### How to run the postgresql database: :bar_chart:
 1. Clone the repository
 2. Run the docker compose command:
    ```sh
@@ -27,7 +27,7 @@
    nc -zv localhost 5432
    ```
 
-### How to run the backend service :
+#### How to run the backend service: :rocket:
 
 1. Add a .env file in the server directory with the following variables (check `.env.example`):
    * `DATABASE_URL ` 
@@ -47,8 +47,12 @@
    ```sh
    npm run dev
    ```
+6. For testing, run:
+   ```sh
+   npm run test
+   ```
 
-### How to run the frontend :
+#### How to run the frontend: :nail_care:
 1. Go to the client directory:
    ```sh
    cd ./client
