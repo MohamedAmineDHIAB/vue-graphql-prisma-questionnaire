@@ -5,9 +5,9 @@
         <div v-else>
             <h2>{{ question.title }} ?</h2>
             <!-- render based on question.type -->
-            <div v-if="question.type === 'radio'">
+            <div>
                 <div v-for="(option, index) in question.options" :key="index">
-                    <input type="radio" :value="option" :id="option" :name="question.title" />
+                    <input :type="question.type" :value="option" :id="option" :name="question.title" />
                     <label :for="option">{{ option }}</label>
                 </div>
             </div>
@@ -25,15 +25,15 @@ const apolloClient = new ApolloClient({
     uri: BACKEND_URI,
 });
 
-const Query = gql`
-  query searchQuestion {
-    searchQuestion(id: 1) {
-      title
-      type
-      options
-    }
-  }
-`;
+// const Query = gql`
+//   query searchQuestion {
+//     searchQuestion(depth: 1) {
+//       title
+//       type
+//       options
+//     }
+//   }
+// `;
 
 export default {
     data() {
@@ -51,15 +51,32 @@ export default {
         };
     },
     mounted() {
-        this.fetchQuestion();
+        const depth = this.getDepthFromUrl();
+        if (depth) {
+            this.fetchQuestion(depth);
+        } else {
+            console.error('Depth parameter not found in URL');
+        }
     },
     methods: {
-        fetchQuestion() {
+        fetchQuestion(depth: number = 1) {
             this.loading = true;
+            const Query = gql`
+                query searchQuestion($depth: Int!) {
+                    searchQuestion(depth: $depth) {
+                        title
+                        type
+                        options
+                    }
+                }
+            `;
 
             apolloClient
                 .query({
                     query: Query,
+                    variables: {
+                        depth: depth,
+                    },
                 })
                 .then((result) => {
                     console.log('Query Result:', result)
@@ -72,6 +89,12 @@ export default {
                     this.error = error;
                     this.loading = false;
                 });
+        }, getDepthFromUrl() {
+            const depthMatch = window.location.hash.match(/#(\d+)/);
+            if (depthMatch && depthMatch[1]) {
+                return parseInt(depthMatch[1]);
+            }
+            return null;
         },
     },
 };
