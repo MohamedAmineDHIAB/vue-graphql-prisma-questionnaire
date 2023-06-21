@@ -9,7 +9,7 @@ dotenv.config();
 
 
 async function main(prisma: PrismaClient) {
-    if (process.env.NODE_ENV === "production") {
+    if (!(process.env.NODE_ENV === "production")) {
         console.log("Seeding the questions table...");
         await questionsSeeder(prisma);
         console.log("Seeding the products table...");
