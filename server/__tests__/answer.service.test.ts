@@ -61,7 +61,7 @@ describe('trying to create an answer', () => {
                 },
             });
             // expect to throw a 404 error with the message "The Question you are trying to answer to does not exist..."
-            expect(error.message).toEqual("The Question you are trying to answer to does not exist...");
+            expect(error.message).toEqual("The Question you are trying to answer does not exist...");
             expect(error.extensions.code).toEqual(404);
         }
 

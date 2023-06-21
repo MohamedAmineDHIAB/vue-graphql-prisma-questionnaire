@@ -17,6 +17,7 @@ model questions {
   options         String[]
   children        String[]
   previous_answer String[]
+  last_question   Boolean  @default(false)
   depth           Int      @default(0)
   createdAt       DateTime @default(now())
 }

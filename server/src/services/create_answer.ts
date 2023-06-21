@@ -17,7 +17,7 @@ const createAnswerPrisma = async (answer: string[], questionId: number, depth: n
         });
     }
     const options = question[0].options;
-    const validAnswer = answer.every((val) => options.includes(val));
+    const validAnswer = answer.every((val) => options.includes(val)) && answer.length > 0;
     if (!validAnswer) {
         const ErrorMsg = "Answer is not valid...";
         throw new GraphQLError(ErrorMsg, {
@@ -31,9 +31,9 @@ const createAnswerPrisma = async (answer: string[], questionId: number, depth: n
                 depth: depth,
             },
         });
-
+        let newAnswer: any;
         if (previousAnswer.length > 0) {
-            const newAnswer = await prisma.answers.update({
+            newAnswer = await prisma.answers.update({
                 where: {
                     depth: previousAnswer[0].depth,
                 },
@@ -42,18 +42,27 @@ const createAnswerPrisma = async (answer: string[], questionId: number, depth: n
                     questionId: questionId,
                 },
             });
-            return newAnswer;
         }
         else {
-            const newAnswer = await prisma.answers.create({
+            newAnswer = await prisma.answers.create({
                 data: {
                     questionId: questionId,
                     answer: answer,
                     depth: depth,
                 },
             });
-            return newAnswer;
         }
+        // delete the answers that are deeper than the current depth
+        await prisma.answers.deleteMany({
+            where: {
+                depth: {
+                    gt: depth,
+                },
+            },
+        });
+        return newAnswer;
+
+
     }
 
 };

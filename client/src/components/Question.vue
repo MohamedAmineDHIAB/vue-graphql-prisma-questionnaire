@@ -4,10 +4,17 @@
         <div v-else-if="isError">An error occured... {{ error.message }}</div>
         <div v-else>
             <h2>{{ question.title }}?</h2>
-            <div>
+            <div v-if="question.type == 'range'">
+                <div>
+                    <input type="range" :min="question.options[0]" :max="question.options[1]" :name="question.title"
+                        step="0.5" :value="defaultAnswer[0] || 95" @change="handleOptionSelected" />
+                    <label :for="question.title">{{ defaultAnswer[0] || 95 }}</label>
+                </div>
+            </div>
+            <div v-else>
                 <div v-for="(option, index) in question.options" :key="index">
                     <input :type="question.type" :value="option" :id="option" :name="question.title"
-                        :checked="defaultAnswer.includes(option)" @change="handleOptionSelected(option)" />
+                        :checked="defaultAnswer.includes(option)" @change="handleOptionSelected" />
                     <label :for="option">{{ option }}</label>
                 </div>
             </div>
@@ -19,35 +26,30 @@
 export default {
     props: {
         loading: {
-            type: Boolean,
             default: false,
         },
         error: {
-            type: Object,
             default: () => ({
                 message: '',
             }),
         },
         isError: {
-            type: Boolean,
             default: false,
         },
         question: {
-            type: Object,
             default: () => ({
                 title: '',
                 type: '',
-                options: [],
+                options: [] as string[],
             }),
         },
         defaultAnswer: {
-            type: Array,
-            default: () => ([]),
+            default: () => ([] as string[]),
         },
     },
     methods: {
-        handleOptionSelected(option: string) {
-            const selectedOption = [option]; // Convert the selected option into an array if needed
+        handleOptionSelected(event: Event) {
+            const selectedOption = (event.target as HTMLInputElement).value;
             this.$emit('optionSelected', selectedOption);
         },
     },

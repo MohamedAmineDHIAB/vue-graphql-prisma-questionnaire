@@ -11,6 +11,7 @@ const questions_seeder = async (prisma: any) => {
                 options: questions[i].options,
                 children: questions[i].children,
                 previous_answer: questions[i].previous_answer,
+                last_question: questions[i].last_question,
                 depth: questions[i].depth,
             },
         });

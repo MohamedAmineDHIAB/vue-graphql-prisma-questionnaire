@@ -66,14 +66,20 @@ button {
   margin: 1rem;
 }
 
+.red-button {
+  color: #ff6464;
+  border-color: #ff6464;
+}
+
 button:hover {
   border-color: #646cff;
-  color: #646cff;
+  background-color: #646cff;
+  color: #ffffff;
 }
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 4px auto -webkit-focus-ring-color; 
 }
 
 .card {

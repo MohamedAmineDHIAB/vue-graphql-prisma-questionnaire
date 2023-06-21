@@ -5,7 +5,10 @@
         <!-- if there is an error render a button "restart the questionnaire" -->
         <button v-if="isError" @click="handleRestart">Restart the questionnaire</button>
         <button v-if="(!isError && depth > 1)" @click="handleBack">Back</button>
-        <button v-if="!isError" @click="handleNext">Next</button>
+        <button v-if="!isError" @click="handleNext" :class="{ 'red-button': isRed }">
+            <span v-if="question.last_question">Submit & Show Recommendations</span>
+            <span v-else>Next</span>
+        </button>
     </div>
 </template>
 
@@ -31,10 +34,12 @@ export default {
                 title: '',
                 type: '',
                 options: [] as string[],
+                last_question: false,
                 id: 0,
             },
             answer: [] as string[],
             depth: 1,
+            isRed: false,
         };
     },
     mounted() {
@@ -57,8 +62,8 @@ export default {
             try {
                 const questionData = await fetchQuestionAPI(depth);
                 this.question = questionData.response ? questionData.response : this.question;
+                console.log('Question fetched successfully', this.question);
                 const answerData = await fetchAnswerAPI(depth);
-                console.log('answerData:', answerData);
                 this.answer = answerData.response ? answerData.response : this.answer;
             } catch (error: any) {
                 this.error.message = error.message;
@@ -68,27 +73,43 @@ export default {
             this.loading = false;
         }
         ,
-        handleNext() {
-            this.depth += 1;
-            this.$router.push(`/questionnaire#${this.depth}`);
-            this.fetchData(this.depth);
+        async handleNext() {
+            try {
+                const { response } = await postAnswerAPI(this.answer, this.depth, this.question.id);
+                console.log('Answer submitted successfully', response?.answer)
+                this.depth += 1;
+                this.$router.push(`/questionnaire#${this.depth}`);
+                this.fetchData(this.depth);
+            } catch (error: any) {
+                this.isRed = true;
+                console.error('Error submitting answer:', error.message);
+            }
         },
         handleBack() {
+            this.isRed = false;
             this.depth -= 1;
             this.$router.push(`/questionnaire#${this.depth}`);
             this.fetchData(this.depth);
         },
         handleRestart() {
+            this.isRed = false;
             this.depth = 1;
             this.$router.push(`/questionnaire#${this.depth}`);
             this.fetchData(this.depth);
         },
-        async handleOptionSelected(answer: string[]) {
-            try {
-                const { response } = await postAnswerAPI(answer, this.depth, this.question.id);
-                console.log('Answer submitted successfully:', response);
-            } catch (error: any) {
-                console.error('Error submitting answer:', error.message);
+        async handleOptionSelected(answer: string) {
+            this.isRed = false;
+            switch (this.question.type) {
+                case 'checkbox':
+                    // if answer exists in this.answer pop it, otherwise push it
+                    if (this.answer.includes(answer)) {
+                        this.answer = this.answer.filter((item) => item !== answer);
+                    } else {
+                        this.answer = [...this.answer, answer];
+                    }
+                    break;
+                default:
+                    this.answer = [answer];
             }
         },
         getDepthFromUrl,

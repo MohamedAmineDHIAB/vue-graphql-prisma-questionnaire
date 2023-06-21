@@ -9,6 +9,7 @@ const typeDefs = `#graphql
         children: [String!]
         previous_answer: [String!]
         depth : Int!
+        last_question: Boolean
         createdAt: Date!
     }
     type Query {

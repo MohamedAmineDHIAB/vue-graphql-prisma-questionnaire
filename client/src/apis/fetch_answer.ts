@@ -4,7 +4,7 @@ const BACKEND_URI = import.meta.env.VITE_BACKEND_URI;
 
 const apolloClient = new ApolloClient({
     uri: BACKEND_URI,
-});
+})
 
 export interface fetchAnswerResponse {
     response?: string[];
@@ -33,8 +33,10 @@ const fetchAnswerAPI = (depth: number = 1): Promise<fetchAnswerResponse> => {
                 const response = [] as string[];
                 resolve({ response });
             }
-            const response = searchAnswer[0].answer;
-            resolve({ response });
+            else {
+                const response = searchAnswer[0].answer;
+                resolve({ response });
+            }
         } catch (error: any) {
             console.error('Query Error:', error.message);
             const message = error.message.replace('GraphQL error: ', '') as string;

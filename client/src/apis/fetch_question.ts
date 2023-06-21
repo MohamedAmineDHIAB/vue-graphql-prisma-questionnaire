@@ -12,6 +12,7 @@ export interface FetchQuestionResponse {
         type: string;
         options: string[];
         id: number;
+        last_question: boolean;
     };
     message?: string;
 }
@@ -26,6 +27,7 @@ const fetchQuestionAPI = (depth: number = 1): Promise<FetchQuestionResponse> => 
                     type
                     options
                     id
+                    last_question
                 }
             }
         `;
