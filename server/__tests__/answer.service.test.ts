@@ -42,7 +42,7 @@ describe('searching for an answer', () => {
 });
 describe('trying to create an answer', () => {
 
-    test('should call prisma.questions.findMany 1 time aand not find a question for the provided depth', async () => {
+    test('should call prisma.questions.findMany 1 time aand not find a question for the provided questionId', async () => {
         const mockAnswer = {
             depth: 1,
             questionId: 0,
@@ -61,7 +61,7 @@ describe('trying to create an answer', () => {
                 },
             });
             // expect to throw a 404 error with the message "The Question you are trying to answer to does not exist..."
-            expect(error.message).toEqual("The Question you are trying to answer to does not exist...");
+            expect(error.message).toEqual("The Question you are trying to answer does not exist...");
             expect(error.extensions.code).toEqual(404);
         }
 

@@ -26,6 +26,7 @@ describe('searching for a question', () => {
             type: 'radio',
             options: ['Option 1', 'Option 2'],
             previous_answer: [],
+            last_question: false,
             depth: 1,
             createdAt: new Date(),
         };

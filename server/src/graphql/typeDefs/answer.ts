@@ -11,7 +11,7 @@ const typeDefs = `#graphql
         searchAnswer(depth: Int): [Answer!]!
     }
     type Mutation {
-        createAnswer(questionId: Int, answer: [String!]): Answer!
+        createAnswer(questionId: Int, answer: [String!], depth: Int): Answer!
     }
 
 `;

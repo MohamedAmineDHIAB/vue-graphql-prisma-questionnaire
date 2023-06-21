@@ -8,7 +8,7 @@ const questions = [
     },
     {
         title: "Untergrund",
-        type: "multiple choice",
+        type: "checkbox",
         options: ["Holz", "Fassade", "Tapete", "Putz"],
         previous_answer: [],
         children: ["Kennen Sie sich mit Deckkraft aus?"],
@@ -44,7 +44,7 @@ const questions = [
         options: ["rot", "blau", "grün", "gelb", "schwarz", "weiss"],
         previous_answer: [],
         children: [],
-        depth: 5
+        depth: 5,
     },
 ]
 

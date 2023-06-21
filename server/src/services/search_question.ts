@@ -33,6 +33,7 @@ const searchQuestionPrisma = async (depth: number, prisma: PrismaClient) => {
             depth: depth - 1,
         },
     });
+
     // if the previous depth has no answer throw an error 402 
     if (previousAnswer.length === 0) {
         const ErrorMsg = "Previous question has not been answered...";
@@ -42,7 +43,11 @@ const searchQuestionPrisma = async (depth: number, prisma: PrismaClient) => {
     }
     // based on depthQuestions get the question of the current depth that has a previous answer field either empty array or that matches the previous answer value
     const currentQuestion = depthQuestions.filter((question) => {
-        return (question.previous_answer.length === 0 || question.previous_answer === previousAnswer[0].answer);
+        // check if the previous_answer field matches the previous answer value
+        const ArrayMatch = previousAnswer[0].answer.every((element) => {
+            return (question.previous_answer.includes(element));
+        })
+        return (question.previous_answer.length === 0 || ArrayMatch);
     });
     return currentQuestion;
 };

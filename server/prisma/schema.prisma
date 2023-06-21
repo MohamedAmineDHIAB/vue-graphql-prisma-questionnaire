@@ -32,7 +32,8 @@ model products {
   id             Int      @id @default(autoincrement())
   name           String
   description    String
-  price          Int
+  price          Float
+  image          String   @default("")
   answers_vector Float[]
   createdAt      DateTime @default(now())
 }

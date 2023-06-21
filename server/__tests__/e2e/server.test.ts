@@ -1,4 +1,4 @@
-// test that the server is running on port 8000 and returns a 200 status code
+// test that the server is running and returns questions
 import createApolloServer from '../../src/utils/create_server';
 // we'll use apollo client to test our server
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client/core';

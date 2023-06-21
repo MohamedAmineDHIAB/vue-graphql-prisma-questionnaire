@@ -11,13 +11,19 @@ const createAnswerPrisma = async (answer: string[], questionId: number, depth: n
     });
     // if no question is found, throw an error
     if (question.length === 0) {
-        const ErrorMsg = "The Question you are trying to answer to does not exist...";
+        const ErrorMsg = "The Question you are trying to answer does not exist...";
         throw new GraphQLError(ErrorMsg, {
             extensions: { code: 404 },
         });
     }
     const options = question[0].options;
-    const validAnswer = answer.every((val) => options.includes(val));
+    let validAnswer = false;
+    if (question[0].type == "range") {
+        validAnswer = answer.length === 1 && parseFloat(answer[0]) >= parseFloat(options[0]) && parseFloat(answer[0]) <= parseFloat(options[1]);
+    }
+    else {
+        validAnswer = answer.every((val) => options.includes(val)) && answer.length > 0;
+    }
     if (!validAnswer) {
         const ErrorMsg = "Answer is not valid...";
         throw new GraphQLError(ErrorMsg, {
@@ -31,9 +37,9 @@ const createAnswerPrisma = async (answer: string[], questionId: number, depth: n
                 depth: depth,
             },
         });
-
+        let newAnswer: any;
         if (previousAnswer.length > 0) {
-            const newAnswer = await prisma.answers.update({
+            newAnswer = await prisma.answers.update({
                 where: {
                     depth: previousAnswer[0].depth,
                 },
@@ -42,18 +48,27 @@ const createAnswerPrisma = async (answer: string[], questionId: number, depth: n
                     questionId: questionId,
                 },
             });
-            return newAnswer;
         }
         else {
-            const newAnswer = await prisma.answers.create({
+            newAnswer = await prisma.answers.create({
                 data: {
                     questionId: questionId,
                     answer: answer,
                     depth: depth,
                 },
             });
-            return newAnswer;
         }
+        // delete the answers that are deeper than the current depth
+        await prisma.answers.deleteMany({
+            where: {
+                depth: {
+                    gt: depth,
+                },
+            },
+        });
+        return newAnswer;
+
+
     }
 
 };
