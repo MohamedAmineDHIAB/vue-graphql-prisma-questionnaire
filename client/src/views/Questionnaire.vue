@@ -5,8 +5,9 @@
         <!-- if there is an error render a button "restart the questionnaire" -->
         <button v-if="isError" @click="handleRestart">Restart the questionnaire</button>
         <button v-if="(!isError && depth > 1)" @click="handleBack">Back</button>
-        <button v-if="!isError" @click="handleNext" :class="{ 'red-button': isRed }">
-            <span v-if="question.last_question">Submit & Show Recommendations</span>
+        <button v-if="!isError" @click="handleNext"
+            :class="{ 'red-button': isRed, 'green-button': question.last_question }">
+            <span v-if="question.last_question">Show Recommendations</span>
             <span v-else>Next</span>
         </button>
     </div>
@@ -62,7 +63,6 @@ export default {
             try {
                 const questionData = await fetchQuestionAPI(depth);
                 this.question = questionData.response ? questionData.response : this.question;
-                console.log('Question fetched successfully', this.question);
                 const answerData = await fetchAnswerAPI(depth);
                 this.answer = answerData.response ? answerData.response : this.answer;
             } catch (error: any) {
@@ -74,6 +74,10 @@ export default {
         }
         ,
         async handleNext() {
+            if (this.question.last_question) {
+                this.$router.push('/recommendations');
+                return;
+            }
             try {
                 const { response } = await postAnswerAPI(this.answer, this.depth, this.question.id);
                 console.log('Answer submitted successfully', response?.answer)

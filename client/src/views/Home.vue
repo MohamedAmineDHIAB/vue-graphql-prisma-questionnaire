@@ -9,8 +9,7 @@
 export default {
     methods: {
         redirectToQuestionnaire() {
-            console.log(import.meta.env.VITE_QUESTIONNAIRE_ROUTE);
-            // this.$router.push('/questionnaire');
+            this.$router.push('/questionnaire#1');
         },
     },
 };

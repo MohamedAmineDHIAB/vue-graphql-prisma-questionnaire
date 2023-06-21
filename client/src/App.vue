@@ -7,12 +7,14 @@
 <script lang="ts">
 import Questionnaire from './views/Questionnaire.vue';
 import Home from './views/Home.vue';
+import Recommendations from './views/Recommendations.vue';
 
 export default {
   name: 'App',
   components: {
     Questionnaire,
     Home,
+    Recommendations
   },
 };
 </script>

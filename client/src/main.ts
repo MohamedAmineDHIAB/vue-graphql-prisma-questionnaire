@@ -17,6 +17,7 @@ const apolloClient = new ApolloClient({
 const routes = [
     { path: '/', component: Home },
     { path: '/questionnaire', component: () => import('./views/Questionnaire.vue') },
+    { path: '/recommendations', component: () => import('./views/Recommendations.vue') },
 ];
 const router = createRouter({
     history: createWebHistory(),
