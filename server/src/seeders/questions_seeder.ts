@@ -4,14 +4,24 @@ import questions from "../data/questions_data.ts"
 
 const questions_seeder = async (prisma: any) => {
     for (let i = 0; i < questions.length; i++) {
-        const question = await prisma.questions.create({
-            data: {
+        // create the question and if it exists, update it
+        await prisma.questions.upsert({
+            where: { id: i + 1 },
+            update: {
                 title: questions[i].title,
                 type: questions[i].type,
                 options: questions[i].options,
                 children: questions[i].children,
                 previous_answer: questions[i].previous_answer,
-                last_question: questions[i].last_question,
+                depth: questions[i].depth,
+            },
+            create: {
+                id: i + 1,
+                title: questions[i].title,
+                type: questions[i].type,
+                options: questions[i].options,
+                children: questions[i].children,
+                previous_answer: questions[i].previous_answer,
                 depth: questions[i].depth,
             },
         });

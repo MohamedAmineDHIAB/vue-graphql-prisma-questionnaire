@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div v-if="loading">Loading...</div>
-        <div v-else-if="isError">An error occured... {{ error.message }}</div>
+
+        <div v-if="isError">An error occured... {{ error.message }}</div>
         <div v-else>
             <h2>{{ question.title }}?</h2>
             <div v-if="question.type == 'range'">
@@ -25,9 +25,6 @@
 <script lang="ts">
 export default {
     props: {
-        loading: {
-            default: false,
-        },
         error: {
             default: () => ({
                 message: '',

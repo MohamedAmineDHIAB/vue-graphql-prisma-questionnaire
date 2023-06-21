@@ -45,7 +45,6 @@ const questions = [
         previous_answer: [],
         children: [],
         depth: 5,
-        last_question: true
     },
 ]
 

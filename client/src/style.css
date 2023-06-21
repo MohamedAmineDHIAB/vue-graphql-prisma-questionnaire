@@ -15,7 +15,7 @@
 }
 
 div {
-  margin: 1rem;
+  margin: 0.5rem;
 }
 
 a {
@@ -88,8 +88,6 @@ button:hover {
 
 
 
-
-
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -115,4 +113,42 @@ button:focus-visible {
   a:hover {
     color: #747bff;
   }
+}
+
+
+/* product styling */
+
+.recommendations_container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.product_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 25rem;
+  width: 20rem;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.product_image {
+  max-width: 20%;
+  height: auto;
+  display: block;
+  margin: none;
+}
+
+.product_name {}
+
+.product_description {}
+
+.input_topk {
+  width: 3rem;
+  padding: 0.6em 0.5em;
+  margin-left: 0.5rem;
+  border-radius: 5px;
+  border: 2px solid #646cff;
 }

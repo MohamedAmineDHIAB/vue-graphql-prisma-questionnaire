@@ -17,7 +17,13 @@ const createAnswerPrisma = async (answer: string[], questionId: number, depth: n
         });
     }
     const options = question[0].options;
-    const validAnswer = answer.every((val) => options.includes(val)) && answer.length > 0;
+    let validAnswer = false;
+    if (question[0].type == "range") {
+        validAnswer = answer.length === 1 && parseFloat(answer[0]) >= parseFloat(options[0]) && parseFloat(answer[0]) <= parseFloat(options[1]);
+    }
+    else {
+        validAnswer = answer.every((val) => options.includes(val)) && answer.length > 0;
+    }
     if (!validAnswer) {
         const ErrorMsg = "Answer is not valid...";
         throw new GraphQLError(ErrorMsg, {

@@ -42,7 +42,7 @@ describe('searching for an answer', () => {
 });
 describe('trying to create an answer', () => {
 
-    test('should call prisma.questions.findMany 1 time aand not find a question for the provided depth', async () => {
+    test('should call prisma.questions.findMany 1 time aand not find a question for the provided questionId', async () => {
         const mockAnswer = {
             depth: 1,
             questionId: 0,

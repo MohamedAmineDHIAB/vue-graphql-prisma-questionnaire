@@ -6,28 +6,28 @@ const apolloClient = new ApolloClient({
     uri: BACKEND_URI,
 });
 
-export interface FetchQuestionResponse {
-    response?: {
-        title: string;
-        type: string;
-        options: string[];
+export interface FetchRecommendationsResponse {
+    response: {
+        name: string;
+        description: string;
+        price: number;
+        image: string;
         id: number;
-        children: string[];
-    };
+    }[];
     message?: string;
 }
 
-const fetchQuestionAPI = (depth: number = 1): Promise<FetchQuestionResponse> => {
-    return new Promise<FetchQuestionResponse>(async (resolve, reject) => {
+const fetchRecommendationsAPI = (top_k: number = 1): Promise<FetchRecommendationsResponse> => {
+    return new Promise<FetchRecommendationsResponse>(async (resolve, reject) => {
 
         const Query = gql`
-            query searchQuestion($depth: Int!) {
-                searchQuestion(depth: $depth) {
-                    title
-                    type
-                    options
+            query GetRecommendations($top_k: Int!) {
+                getRecommendations(top_k: $top_k) {
+                    name
+                    description
+                    price
+                    image
                     id
-                    children
                 }
             }
         `;
@@ -36,11 +36,11 @@ const fetchQuestionAPI = (depth: number = 1): Promise<FetchQuestionResponse> => 
             const rawResponse = await apolloClient.query({
                 query: Query,
                 variables: {
-                    depth: depth,
+                    top_k: top_k,
                 },
             });
 
-            const response = rawResponse.data.searchQuestion[0];
+            const response = rawResponse.data.getRecommendations;
             resolve({ response });
         } catch (error: any) {
             console.error('Query Error:', error.message);
@@ -49,5 +49,5 @@ const fetchQuestionAPI = (depth: number = 1): Promise<FetchQuestionResponse> => 
         }
     });
 }
-export default fetchQuestionAPI;
+export default fetchRecommendationsAPI;
 

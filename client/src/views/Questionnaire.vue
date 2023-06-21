@@ -1,13 +1,16 @@
 <template>
-    <div>
-        <Question :loading="loading" :error="error" :isError="isError" :question="question"
-            @optionSelected="handleOptionSelected" :defaultAnswer="answer" />
+    <div v-if="loading">
+        <h2>Loading...</h2>
+    </div>
+    <div v-else>
+        <Question :error="error" :isError="isError" :question="question" @optionSelected="handleOptionSelected"
+            :defaultAnswer="answer" />
         <!-- if there is an error render a button "restart the questionnaire" -->
         <button v-if="isError" @click="handleRestart">Restart the questionnaire</button>
         <button v-if="(!isError && depth > 1)" @click="handleBack">Back</button>
         <button v-if="!isError" @click="handleNext"
-            :class="{ 'red-button': isRed, 'green-button': question.last_question }">
-            <span v-if="question.last_question">Show Recommendations</span>
+            :class="{ 'red-button': isRed, 'green-button': !question.children.length }">
+            <span v-if="!question.children.length">Show Recommendations</span>
             <span v-else>Next</span>
         </button>
     </div>
@@ -35,7 +38,7 @@ export default {
                 title: '',
                 type: '',
                 options: [] as string[],
-                last_question: false,
+                children: [] as string[],
                 id: 0,
             },
             answer: [] as string[],
@@ -74,13 +77,13 @@ export default {
         }
         ,
         async handleNext() {
-            if (this.question.last_question) {
+            if (this.question.children.length === 0) {
                 this.$router.push('/recommendations');
                 return;
             }
             try {
                 const { response } = await postAnswerAPI(this.answer, this.depth, this.question.id);
-                console.log('Answer submitted successfully', response?.answer)
+                console.log('Answer submitted successfully:', response);
                 this.depth += 1;
                 this.$router.push(`/questionnaire#${this.depth}`);
                 this.fetchData(this.depth);
